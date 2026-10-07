@@ -22,10 +22,10 @@ function doPost(e){let lock;try{
  }catch(err){return json_({ok:false,error:err.message||String(err)});}finally{if(lock&&lock.hasLock())lock.releaseLock();}}
 function digest_(text){return Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256,text,Utilities.Charset.UTF_8).map(b=>('0'+((b+256)%256).toString(16)).slice(-2)).join('');}
 function configurarPalavraPasse(){
- const ui=SpreadsheetApp.getUi(),answer=ui.prompt('MDP Meeting Hub','Defina uma palavra-passe de pelo menos 12 caracteres. Partilhe-a apenas com o Comité.',ui.ButtonSet.OK_CANCEL);
- if(answer.getSelectedButton()!==ui.Button.OK)return;
- const password=answer.getResponseText();if(password.length<12)throw Error('Use pelo menos 12 caracteres.');
- const salt=Utilities.getUuid();PropertiesService.getScriptProperties().setProperties({PASSWORD_SALT:salt,PASSWORD_HASH:digest_(salt+password)});ui.alert('Palavra-passe configurada. Pode implementar a aplicação web.');
+ const prop=PropertiesService.getScriptProperties(),password=prop.getProperty('PASSWORD_INITIAL');
+ if(!password||password.length<12)throw Error('Nas Definições do projeto, adicione a propriedade PASSWORD_INITIAL com pelo menos 12 caracteres e guarde.');
+ const salt=Utilities.getUuid();prop.setProperties({PASSWORD_SALT:salt,PASSWORD_HASH:digest_(salt+password)});prop.deleteProperty('PASSWORD_INITIAL');
+ console.log('Palavra-passe configurada. O valor inicial foi removido.');
 }
 function login_(password){
  const prop=PropertiesService.getScriptProperties(),salt=prop.getProperty('PASSWORD_SALT'),hash=prop.getProperty('PASSWORD_HASH');if(!salt||!hash)throw Error('O administrador deve executar configurarPalavraPasse no Apps Script.');
