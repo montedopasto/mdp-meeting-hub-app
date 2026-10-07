@@ -6,7 +6,7 @@ Interface do Comité de Gestão da Monte do Pasto. O código público não cont�
 
 1. Na Google Sheet `meetings`, abrir **Extensões → Apps Script**.
 2. Colar `backend/Code.gs` no projeto associado à Sheet e guardar.
-3. Executar `configurarPalavraPasse` e definir uma palavra-passe forte; o Google pede autorização para o script aceder às folhas de cálculo. Apenas a Sheet identificada no código é utilizada.
+3. Em **Definições do projeto → Propriedades do script**, guardar `PASSWORD_INITIAL` com uma palavra-passe de pelo menos 12 caracteres. Executar `configurarPalavraPasse` para a converter em hash e remover o valor inicial; o Google pede autorização para o script aceder às folhas de cálculo. Apenas a Sheet identificada no código é utilizada.
 4. **Implementar → Nova implementação → Aplicação Web**, executar como o proprietário, acesso **Qualquer pessoa**. O endpoint é acessível, mas leitura e escrita dos dados exigem uma sessão autenticada pela palavra-passe; a Sheet mantém-se privada.
 5. Copiar o URL terminado em `/exec` para `public/config.js` em `API_URL` e executar `npm run build`. Pode também configurar o endereço uma vez no ecrã de login da app; apenas o endereço é guardado localmente.
 6. Publicar a pasta `dist` no GitHub Pages. A interface usa caminhos relativos, compatíveis com subpastas de repositório.
