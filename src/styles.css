@@ -22,3 +22,12 @@
 .attention strong{font-size:16px;font-weight:600;line-height:1.5}
 .attention small{font-size:13px;line-height:1.5}
 @media(max-width:780px){.tablewrap .rowtitle strong{font-size:18px}.tablewrap td,.tablewrap th{padding:18px 14px}.tablewrap .owner,.tablewrap .due{font-size:14px}.dialog h2{font-size:24px}.dialog .timeline p{font-size:16px}.attention strong{font-size:15px}.attention .due{font-size:12px}}
+
+.officialbrand{display:flex;flex-direction:column;align-items:center;overflow:hidden;gap:0;letter-spacing:1px}
+.officialbrand img{display:block;width:220px;height:220px;object-fit:contain;margin:-45px 0 -28px;max-width:none}
+.officialbrand small{margin:0;font-size:10px;letter-spacing:2px}
+.minutesbrand.officialbrand{align-items:flex-start;margin-bottom:25px}
+.minutesbrand.officialbrand img{width:260px;height:260px;margin:-65px 0 -35px}
+.loginbrand{margin-bottom:22px}
+@media(max-width:780px){.sidebar .officialbrand img{width:170px;height:170px;margin:-38px 0 -22px}}
+@media print{.minutesbrand.officialbrand{break-inside:avoid}.minutesbrand.officialbrand img{width:220px;height:220px;margin:-50px 0 -30px}}
