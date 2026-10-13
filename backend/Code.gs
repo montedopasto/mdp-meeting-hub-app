@@ -54,6 +54,12 @@ function applyEvent_(input,event){
  if(!a){a={id:event.id,updates:[]};data.actions.push(a);m.actionIds.push(a.id);}
  Object.assign(a,{area:String(p.area).trim(),title:String(p.title).trim(),owner:String(p.owner).trim(),status:p.status,due:p.due||''});
  a.updates.push({at:event.at,meetingId:m.id,text:String(p.text).trim(),status:a.status,owner:a.owner,due:a.due,kind:'Atualização'});
+ }else if(operation==='delete-comment'||operation==='restore-comment'){
+ open();const a=data.actions.find(x=>x.id===p.id);if(!a||!m.actionIds.includes(a.id))throw Error('Assunto desconhecido nesta reunião.');
+ if(!Number.isInteger(p.updateIndex))throw Error('Comentário inválido.');const u=a.updates[p.updateIndex];
+ if(!u||u.at!==p.updateAt||u.meetingId!==m.id||u.kind!=='Atualização')throw Error('Só pode alterar comentários de uma reunião aberta.');
+ if(operation==='delete-comment'){if(u.deleted)throw Error('O comentário já foi apagado.');u.deleted=true;u.deletedAt=event.at;}
+ else{if(!u.deleted)throw Error('O comentário não está apagado.');u.deleted=false;delete u.deletedAt;}
  }else if(operation==='meeting'){open();if(!p.location||!String(p.location).trim())throw Error('Indique o local.');m.location=String(p.location).trim();m.participants=String(p.participants||'');
  }else if(operation==='close'){open();m.snapshots=m.actionIds.map(id=>JSON.parse(JSON.stringify(data.actions.find(a=>a.id===id))));m.status='Encerrada';m.closedAt=event.at;
  }else if(operation==='next'){
